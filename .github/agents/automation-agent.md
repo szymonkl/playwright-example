@@ -61,6 +61,8 @@ dotnet test --filter # Run specific tests
 4. Use `playwright-cli` to debug issues interactively
 5. Modify tests as needed
 6. Re-run tests until all pass
+7. Remove not used methods, classes, and files, clean up not needed code and usings
+8. Rerun tests to ensure everything is working after cleanup
 
 ## Important Notes
 - ALWAYS run and investigate tests in headed mode for debugging to interact with the browser
