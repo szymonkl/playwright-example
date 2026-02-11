@@ -4,6 +4,7 @@ description: Create an automated test that verifies the Getting Started installa
 ---
 ## Test Scenario
 1. Navigate to https://playwright.dev
-2. Click on "Getting Started" link
-3. Select "dotnet" from the language/framework dropdown
-4. Assert that .NET installation instructions are displayed
+2. Click on getting started link
+3. Select dotnet from the language/framework dropdown
+4. Assert page title
+5. Assert heading text

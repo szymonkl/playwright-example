@@ -59,7 +59,7 @@ dotnet test --filter # Run specific tests
 2. Build project and fix compilation errors
 3. Run tests in headed mode and identify failures
 4. Use `playwright-cli` to debug issues interactively
-5. Modify tests or application as needed
+5. Modify tests as needed
 6. Re-run tests until all pass
 
 ## Important Notes
