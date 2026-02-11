@@ -16,6 +16,7 @@ This document provides guidelines for GitHub Copilot when working with this .NET
 - Follow the Arrange-Act-Assert (AAA) pattern for all tests
 - Use descriptive test names that clearly indicate what is being tested
 - Do not use comments to explain what the test is doing; the code should be self-explanatory
+- Do not use Arrange/Act/Assert comments; structure the code to make these phases clear without comments
 - Keep tests focused and independent; avoid test dependencies
 - Use [SetUp] and [TearDown] methods for test initialization and cleanup
 
@@ -24,13 +25,10 @@ Example structure:
 [Test]
 public async Task Should_Navigate_To_Homepage_And_Verify_Title()
 {
-    // Arrange
     var page = await Browser.NewPageAsync();
     
-    // Act
     await page.GotoAsync("https://example.com");
     
-    // Assert
     await Assertions.Expect(page).ToHaveTitleAsync(new Regex("Expected Title"));
      
 }
@@ -137,7 +135,6 @@ public class LoginPage
 {
     private readonly IPage _page;
     
-    // Locators
     private ILocator UsernameInput => _page.GetByPlaceholder("Username");
     private ILocator PasswordInput => _page.GetByPlaceholder("Password");
     private ILocator LoginButton => _page.GetByRole(AriaRole.Button, new() { Name = "Login" });
@@ -181,28 +178,23 @@ public class LoginPage
 [Test]
 public async Task Should_Login_Successfully_With_Valid_Credentials()
 {
-    // Arrange
+    
     var loginPage = new LoginPage(_page);
     
-    // Act
     await loginPage.NavigateAsync();
     var homePage = await loginPage.LoginAsync("user@example.com", "password123");
     
-    // Assert
     await Assertions.Expect(homePage.WelcomeHeading).ToContainTextAsync("Welcome");
 }
 
 [Test]
 public async Task Should_Display_Error_For_Invalid_Credentials()
 {
-    // Arrange
     var loginPage = new LoginPage(_page);
     
-    // Act
     await loginPage.NavigateAsync();
     await loginPage.LoginAsync("invalid@example.com", "wrongpassword");
     
-    // Assert
     await Assertions.Expect(loginPage.ErrorMessage).ToBeVisibleAsync();
 }
 ```
