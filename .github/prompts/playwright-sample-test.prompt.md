@@ -1,0 +1,9 @@
+---
+name: playwright-sample-test
+description: Create an automated test that verifies the Getting Started installation guide for .NET.
+---
+## Test Scenario
+1. Navigate to https://playwright.dev
+2. Click on "Getting Started" link
+3. Select "dotnet" from the language/framework dropdown
+4. Assert that .NET installation instructions are displayed
