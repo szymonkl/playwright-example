@@ -28,7 +28,7 @@ This agent manages the complete test development lifecycle including creating au
 - Monitor and report test results
 
 ### Issue Investigation & Debugging
-- Use `playwright-cli` to interactively reproduce and debug test failures
+- Use `playwright-cli` in headed mode to interactively reproduce and debug test failures
 - Explore page structure, element interactions, and application state
 - Take snapshots and screenshots for analysis
 - Mock network requests or modify routing as needed
@@ -57,7 +57,10 @@ dotnet test --filter # Run specific tests
 ## Workflow
 1. Create or modify tests according to [copilot-instructions.md](../copilot-instructions.md)
 2. Build project and fix compilation errors
-3. Run tests and identify failures
+3. Run tests in headed mode and identify failures
 4. Use `playwright-cli` to debug issues interactively
 5. Modify tests or application as needed
 6. Re-run tests until all pass
+
+## Important Notes
+- Always run tests in headed mode for debugging to interact with the browser

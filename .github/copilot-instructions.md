@@ -15,6 +15,7 @@ This document provides guidelines for GitHub Copilot when working with this .NET
 
 - Follow the Arrange-Act-Assert (AAA) pattern for all tests
 - Use descriptive test names that clearly indicate what is being tested
+- Do not use comments to explain what the test is doing; the code should be self-explanatory
 - Keep tests focused and independent; avoid test dependencies
 - Use [SetUp] and [TearDown] methods for test initialization and cleanup
 
@@ -28,13 +29,10 @@ public async Task Should_Navigate_To_Homepage_And_Verify_Title()
     
     // Act
     await page.GotoAsync("https://example.com");
-    var title = await page.TitleAsync();
     
     // Assert
-    Assert.That(title, Does.Contain("Expected Title"));
-    
-    // Cleanup
-    await page.CloseAsync();
+    await Assertions.Expect(page).ToHaveTitleAsync(new Regex("Expected Title"));
+     
 }
 ```
 
@@ -69,31 +67,15 @@ var link = page.GetByText("Click here", new() { Exact = true });
 
 ### 4. Error Handling and Assertions
 
-- Use NUnit assertions with fluent syntax where possible
-- Catch and handle Playwright-specific exceptions (PlaywrightException)
-- Provide meaningful assertion messages for failed tests
-- Log important steps for debugging
-
+- Use Playwright built-in assertions when possible
 Example:
 ```csharp
-Assert.That(await page.TitleAsync(), Does.StartWith("Expected"));
-Assert.That(await page.IsVisibleAsync(selector), Is.True, "Element should be visible");
-
-try 
-{
-    await page.GotoAsync(url);
-}
-catch (PlaywrightException ex)
-{
-    Assert.Fail($"Navigation failed: {ex.Message}");
-}
+Assertions.Expect(page.GetByRole(AriaRole.Heading)).ToHaveTextAsync("Welcome");
 ```
 
 ### 5. Configuration and Setup
 
-- Use dependency injection or factory patterns for browser/context/page creation
-- Store browser configuration (headless, slow motion, timeouts) in settings
-- Support environment-specific configuration (dev, staging, production)
+- Store browser configuration (headless, slow motion, timeouts) in class level constants
 - Use [OneTimeSetUp] for expensive operations like browser launch
 
 Example:
@@ -207,8 +189,7 @@ public async Task Should_Login_Successfully_With_Valid_Credentials()
     var homePage = await loginPage.LoginAsync("user@example.com", "password123");
     
     // Assert
-    var welcomeMessage = await homePage.GetWelcomeMessageAsync();
-    Assert.That(welcomeMessage, Does.Contain("Welcome"));
+    await Assertions.Expect(homePage.WelcomeHeading).ToContainTextAsync("Welcome");
 }
 
 [Test]
@@ -222,62 +203,10 @@ public async Task Should_Display_Error_For_Invalid_Credentials()
     await loginPage.LoginAsync("invalid@example.com", "wrongpassword");
     
     // Assert
-    Assert.That(await loginPage.IsErrorMessageVisibleAsync(), Is.True);
+    await Assertions.Expect(loginPage.ErrorMessage).ToBeVisibleAsync();
 }
 ```
 
-#### Advanced Page Object Patterns
-
-**Component/Widget Page Objects**: For reusable UI components used across multiple pages
-
-```csharp
-public class NavigationBar
-{
-    private readonly IPage _page;
-    private ILocator HomeLink => _page.GetByRole(AriaRole.Link, new() { Name = "Home" });
-    private ILocator ProfileLink => _page.GetByRole(AriaRole.Link, new() { Name = "Profile" });
-    
-    public NavigationBar(IPage page)
-    {
-        _page = page;
-    }
-    
-    public async Task<HomePage> ClickHomeAsync()
-    {
-        await HomeLink.ClickAsync();
-        return new HomePage(_page);
-    }
-    
-    public async Task<ProfilePage> ClickProfileAsync()
-    {
-        await ProfileLink.ClickAsync();
-        return new ProfilePage(_page);
-    }
-}
-```
-
-**Base Page Object**: For shared functionality across multiple pages
-
-```csharp
-public abstract class BasePage
-{
-    protected IPage Page { get; }
-    
-    protected BasePage(IPage page)
-    {
-        Page = page;
-    }
-    
-    public async Task<string> GetPageTitleAsync() => await Page.TitleAsync();
-    
-    public async Task<string> GetPageUrlAsync() => Page.Url;
-    
-    public async Task WaitForLoadStateAsync(LoadState loadState = LoadState.NetworkIdle)
-    {
-        await Page.WaitForLoadStateAsync(loadState);
-    }
-}
-```
 
 ## File Organization
 
@@ -296,15 +225,11 @@ public abstract class BasePage
 ## Security
 
 - Never commit actual credentials; use environment variables or secure vaults
-- Mask sensitive data in logs and reports
-- Use incognito contexts for tests requiring privacy
 
 ## Common Patterns to Avoid
 
 - Don't use Thread.Sleep(); use Playwright's built-in waits
 - Don't mix synchronous and asynchronous code without proper handling
-- Don't create new browser instances for each test (expensive operation)
-- Don't ignore exceptions without logging
 
 ## Resources
 
@@ -312,7 +237,3 @@ public abstract class BasePage
 - [NUnit Documentation](https://docs.nunit.org/)
 - [Best Practices for Playwright Testing](https://playwright.dev/dotnet/docs/best-practices)
 
----
-
-**Last Updated**: February 2026
-**Project**: PlaywrightTests (.NET NUnit)
