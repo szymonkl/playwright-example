@@ -63,4 +63,4 @@ dotnet test --filter # Run specific tests
 6. Re-run tests until all pass
 
 ## Important Notes
-- Always run tests in headed mode for debugging to interact with the browser
+- ALWAYS run and investigate tests in headed mode for debugging to interact with the browser
