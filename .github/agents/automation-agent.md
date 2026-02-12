@@ -63,4 +63,4 @@ dotnet test --filter # Run specific tests
 8. Rerun tests to ensure everything is working after cleanup
 
 ## Important Notes
-- ALWAYS run and investigate tests in headed mode for debugging to interact with the browser by running `playwright-cli open --headed`
+- ALWAYS run and investigate tests in headed mode for debugging to interact with the browser by running `playwright-cli open --headed chromium`
