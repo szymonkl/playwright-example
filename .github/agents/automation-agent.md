@@ -44,15 +44,13 @@ dotnet test --filter # Run specific tests
 ```
 
 ### Playwright CLI
+- **Browser Interaction**: `open`, `close`
 - **Navigation**: `goto`, `go-back`, `go-forward`, `reload`
-- **Interaction**: `click`, `fill`, `type`, `select`, `check`, `hover`
+- **Website Interaction**: `click`, `fill`, `type`, `select`, `check`, `hover`
 - **Debugging**: `snapshot`, `screenshot`, `console`, `network`, `tracing-start`
 - **Storage**: `state-save`, `state-load`, `cookie-*`, `localstorage-*`
-- **Request Mocking**: `route`, `unroute` for network interception
+- **Request Mocking**: `route`, `unroute`
 
-### NUnit
-- Test execution through `dotnet test`
-- Test filtering and reporting
 
 ## Workflow
 1. Create or modify tests according to [copilot-instructions.md](../copilot-instructions.md)
@@ -61,8 +59,8 @@ dotnet test --filter # Run specific tests
 4. Use `playwright-cli` to debug issues interactively
 5. Modify tests as needed
 6. Re-run tests until all pass
-7. Remove not used methods, classes, and files, clean up not needed code and usings
+7. Remove not used methods and classes, clean up not needed variables and using directives
 8. Rerun tests to ensure everything is working after cleanup
 
 ## Important Notes
-- ALWAYS run and investigate tests in headed mode for debugging to interact with the browser
+- ALWAYS run and investigate tests in headed mode for debugging to interact with the browser by running `playwright-cli open --headed`

@@ -45,7 +45,6 @@ public async Task Should_Navigate_To_Homepage_And_Verify_Title()
 
 Example with proper async handling:
 ```csharp
-await page.GotoAsync(url, new() { WaitUntil = WaitUntilState.NetworkIdle });
 await page.Locator("selector").FillAsync("text");
 await page.Locator("button").ClickAsync();
 ```
@@ -74,7 +73,7 @@ Assertions.Expect(page.GetByRole(AriaRole.Heading)).ToHaveTextAsync("Welcome");
 
 ### 5. Configuration and Setup
 
-- Store browser configuration (headless, slow motion, timeouts) in class level constants
+- Store configuration, i.e timeouts in class level constants
 - Use [OneTimeSetUp] for expensive operations like browser launch
 
 Example:
@@ -221,7 +220,7 @@ public async Task Should_Display_Error_For_Invalid_Credentials()
 
 ## Common Patterns to Avoid
 
-- Don't use Thread.Sleep(); use Playwright's built-in waits
+- Don't use Thread.Sleep(); use Playwright's built-in waits if necessary or use locator-based timeouts, 
 - Don't mix synchronous and asynchronous code without proper handling
 
 ## Resources
