@@ -25,10 +25,12 @@ This agent manages the complete test development lifecycle including creating au
 - Identify test failures and gather information for debugging
 
 ### Issue Investigation & Debugging
-- Use `playwright-cli` in headed mode to interactively reproduce and debug test failures
+- ALWAYS use `playwright-cli` in headed mode to interactively reproduce and debug test failures
+- Follow [SKILL.md](../skills/playwright-cli/SKILL.md) guidelines for effective debugging and issue resolution
 - Explore page structure, element interactions, and application state
 - Take snapshots and screenshots for analysis
 - Modify tests based on findings and re-run until all tests pass
+- DO NOT guess fixes; rely on evidence and debugging insights to make informed changes
 
 ### Code Cleanup
 - Remove unused methods, classes, variables, and using directives after tests are passing

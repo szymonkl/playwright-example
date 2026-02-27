@@ -37,8 +37,9 @@ public async Task Should_Navigate_To_Homepage_And_Verify_Title()
 
 - Run tests in headed mode for better debugging and visibility
 - Use async/await patterns consistently throughout all Playwright calls
-- Prefer implicit waits over explicit Thread.Sleep()
 - Use built-in Playwright locator automatic waiting and retry mechanisms instead of manual waits
+- Use Playwright's waiting mechanisms only when necessary; prefer locator-based timeouts and assertions that automatically wait for conditions
+- Avoid using `Thread.Sleep()` or similar blocking calls
 - Always close browsers and pages in [TearDown] or using statements
 - Leverage Page Objects or Helper methods for reusable page interactions
 
