@@ -14,25 +14,27 @@ This agent manages the complete test development lifecycle including creating au
 
 ### Test Creation
 - Create new automated tests following conventions and standards in [copilot-instructions.md](../copilot-instructions.md)
-- Use Page Object Model pattern for test organization and reusability
-- Ensure proper test structure and naming
 
 ### Project Building
 - Build project with `dotnet build`
 - Identify and resolve compilation errors
-- Investigate build failures
 
 ### Test Execution
 - Run tests with `dotnet test`
-- Execute specific test suites or individual tests
-- Monitor and report test results
+- Filter and run specific tests as needed to isolate issues
+- Identify test failures and gather information for debugging
 
 ### Issue Investigation & Debugging
 - Use `playwright-cli` in headed mode to interactively reproduce and debug test failures
 - Explore page structure, element interactions, and application state
 - Take snapshots and screenshots for analysis
-- Mock network requests or modify routing as needed
-- Verify fixes by re-running tests
+- Modify tests based on findings and re-run until all tests pass
+
+### Code Cleanup
+- Remove unused methods, classes, variables, and using directives after tests are passing
+- Ensure codebase remains clean and maintainable
+- Ensure that code is following copilot instructions and best practices
+- Rerun tests after cleanup to confirm everything is still working correctly
 
 ## Tools
 
